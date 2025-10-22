@@ -32,12 +32,17 @@ O objetivo do circuito é calcular a soma das diferenças absolutas entre dois c
 
 ### Estrutura
 
+O cálculo da SAD é descrito por
+
+\[
+SAD = \sum_i |A_i - B_i|
+\]
+
 O sistema foi dividido em módulos independentes, facilitando o entendimento, a simulação e a reutilização dos componentes.  
 Os principais blocos que compõem o projeto e as seções de código mais representativas de suas funções são:
 
 - `absolute_difference.vhdl` — responsável por calcular o valor absoluto da diferença entre dois sinais -> cálculo representado principalmente pela descrição a seguir;
-```
-vhdl
+```vhdl
 ARCHITECTURE structure OF absolute_difference IS
 --- ... declarações de sinais com tamanhos genéricos
 BEGIN
@@ -73,16 +78,6 @@ END structure;
 - `sad.vhdl` — módulo principal, que integra os componentes anteriores e implementa a lógica completa da soma das diferenças absolutas.  
 
 A arquitetura modular permite que o circuito seja facilmente testado e expandido, mantendo a coerência funcional entre os módulos.
-
----
-
-#### Funcionamento do Circuito
-
-O cálculo da SAD é descrito por
-
-\[
-SAD = \sum_i |A_i - B_i|
-\]
 
 ### Simulação
 
