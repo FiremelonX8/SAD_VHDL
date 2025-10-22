@@ -98,6 +98,6 @@ O resultado da simulação (imagem abaixo) confirma o comportamento esperado da 
 
 ## Outras observações
 
-Neste README foi feita uma descrição resumida do circuito SADv1, mas é possível acompanhar uma explicação mais detalhada por meio dos comentários presentes ao longo dos arquivos VHDL na pasta `rtl`.
+Neste README foi feita uma descrição resumida do circuito SADv1 baseado no bloco de controle e no bloco operativo vistos em aula, mas é possível acompanhar uma explicação mais detalhada por meio dos comentários presentes ao longo dos arquivos VHDL na pasta `rtl`.
 
 Os resultados da análise de timing e de custo estão no arquivo `resultados.json`.
