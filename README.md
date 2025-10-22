@@ -60,24 +60,35 @@ END structure;
 - `signed_subtractor.vhdl` — realiza a subtração entre números com sinal -> aqui, destaca-se a subtração entre números com sinal, ou seja, do tipo signed, a qual é diferenciada da anterior por esse único motivo; 
 - `unsigned_adder.vhdl` — efetua a soma de valores inteiros sem sinal -> utilizado no bloco operativo da SAD (sad_bo) para mapear os valores retornados da diferença absoluta para suas entradas de soma, compreendendo a soma iterativa das diferenças como explicitado pela seguinte expressão e código:
 
+$ \sum_{i=0}^{N-1} |A_i - B_i| $
 
-  
-- `mux_2to1.vhdl` — seleciona entre duas entradas com base em um sinal de controle;  
-- `unsigned_register.vhdl` — armazena valores intermediários de forma síncrona com o clock;  
-- `sad_pack.vhdl` — contém tipos e constantes auxiliares utilizados nos módulos principais. Um exemplo a seguir é a declaração da função sad_length em sad_pack, que é utilizada posteriormente em sad_bo (seção de código mostrada após a primeira);  
+``` vhdl
+    calc_abs_diff : entity work.absolute_difference
+        generic map(N => CFG.bits_per_sample)
+        port map(input_a => a_reg_q, input_b => b_reg_q, abs_diff => abs_diff_out);
+
+    -- UNIDADE ACUMULADORA (Soma)
+    soma_in_b <= resize(abs_diff_out, SAD_WIDTH); -- Ajusta largura do resultado
+    
+    adder_soma : entity work.unsigned_adder
+        generic map(N => SAD_WIDTH)
+        port map(input_a => soma_q, input_b => soma_in_b, sum => soma_sum);
 ```
+  
+- `mux_2to1.vhdl` — seleciona entre duas entradas com base em um sinal de controle -> usado por absolute_difference para selecionar o resultado positivo de uma das duas subtrações feitas (seção do código apresentada anteriormente em absolute_difference);  
+- `unsigned_register.vhdl` — armazena valores intermediários de forma síncrona com o clock -> utilizado em sad_bo e gerenciado, assim, pelos sinais de comando vindos do bloco de controle sad_bc;  
+- `sad_pack.vhdl` — contém tipos e constantes auxiliares utilizados nos módulos principais. Um exemplo a seguir é a declaração da função sad_length em sad_pack, que é utilizada posteriormente em sad_bo (seção de código mostrada após a primeira);  
+```vhdl
 --- sad_pack
     function sad_length(bits_per_sample : positive; samples_per_block : positive) return positive;
 ```
 --
-```
+```vhdl
 --- sad_bo
     constant SAD_WIDTH  : positive := sad_length(CFG.bits_per_sample, CFG.samples_per_block);
 ```
 - `sad_bc.vhdl` e `sad_bo.vhdl` — blocos intermediários de controle e operação do SAD, responsáveis pela organização das entradas e pela soma acumulada;  
-- `sad.vhdl` — módulo principal, que integra os componentes anteriores e implementa a lógica completa da soma das diferenças absolutas.  
-
-A arquitetura modular permite que o circuito seja facilmente testado e expandido, mantendo a coerência funcional entre os módulos.
+- `sad.vhdl` — módulo principal, que integra os componentes anteriores e implementa a lógica completa da soma das diferenças absolutas. É similar a uma interface em que os blocos são instanciados e recebem as variáveis antes centralizadas na sad.
 
 ### Simulação
 
