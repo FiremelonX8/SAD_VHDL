@@ -1,11 +1,26 @@
 {
-  "utilizacao": {
-    "total combinational functions": 58,
-    "dedicated logic registers": 57,
-    "total pins": 41
-  },
-  "atraso": {
-    "Fmax": 168.89,
-    "unidade": "MHz"
-  }
+    "dupla": {
+        "nome": "Dupla 5",
+        "alunos": [
+            {"nome": "Daniel Garcia Boer", "matricula": "25105144"},
+            {"nome": "Filipe Potrich Cechim", "matricula": "25100483"}
+        ]
+    },
+    "quartus": {
+        "os": "Windows 11",
+        "versao": "13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition",
+        "fpga": {
+            "familia": "Cyclone II",
+            "dispositivo": "EP2C5AF256A7"
+        }
+    },
+    "utilizacao": {
+        "total combinational functions": 58,
+        "dedicated logic registers": 57,
+        "total pins": 41
+    },
+    "atraso": {
+        "Fmax": 168.89,
+        "unidade": "MHz"
+    }
 }
